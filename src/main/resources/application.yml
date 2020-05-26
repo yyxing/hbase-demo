@@ -1,0 +1,7 @@
+hbase:
+  pool:
+    size: 20
+    type: default
+  zookeeper:
+    address: 192.168.253.128
+    port: 2181
