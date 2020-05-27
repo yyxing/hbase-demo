@@ -16,7 +16,6 @@ import java.util.concurrent.Executors;
 
 @Data
 @Slf4j
-@Component
 public class HBaseConnection {
 
     @Value("hbase.pool.size")
@@ -26,7 +25,7 @@ public class HBaseConnection {
     @Value("hbase.zookeeper.address")
     private String zookeeperAddress;
     @Value("hbase.zookeeper.address")
-    private Integer zookeeperPort;
+    private String zookeeperPort;
 
     private static HBaseConnection instance;
     private static Configuration configuration;
@@ -39,12 +38,13 @@ public class HBaseConnection {
             // HBase 配置类
             configuration = HBaseConfiguration.create();
             // 设置每个Region Server处理的线程数量
-            configuration.set("hbase.client.ipc.pool.size", poolSize);
+            configuration.set("hbase.client.ipc.pool.size", "20");
             // 设置HBase的Zookeeper地址
-            String zookeeperUrl = String.format("%s:%d", zookeeperAddress, zookeeperPort);
-            configuration.set("hbase.zookeeper.quorum", zookeeperUrl);
+            configuration.set("hbase.zookeeper.quorum", "192.168.253.129");
+            configuration.set("hbase.zookeeper.property.clientPort", "2181");
+            configuration.set("fs.defaultFs", "192.168.253.129:9000");
             // 设置Executors 不同的线程中使用单独的Table和Admin对象
-            executor = Executors.newFixedThreadPool(Integer.parseInt(poolSize));
+            executor = Executors.newFixedThreadPool(20);
             // 创建HBase连接类
             connection = ConnectionFactory.createConnection(configuration, executor);
         } catch (Exception e) {
@@ -53,9 +53,9 @@ public class HBaseConnection {
     }
 
     public static HBaseConnection getInstance() {
-        if (connection == null) {
+        if (instance == null) {
             synchronized (HBaseConnection.class) {
-                if (connection == null) {
+                if (instance == null) {
                     instance = new HBaseConnection();
                 }
             }
