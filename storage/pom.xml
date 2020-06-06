@@ -6,17 +6,13 @@
         <groupId>com.devil</groupId>
         <artifactId>HOS</artifactId>
         <version>1.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.devil</groupId>
     <artifactId>storage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>storage</name>
     <description>Storage Module For HOS</description>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

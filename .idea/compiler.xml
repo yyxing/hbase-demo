@@ -10,7 +10,6 @@
         <module name="sdk" />
         <module name="core" />
         <module name="server" />
-        <module name="HOS" />
         <module name="storage" />
       </profile>
     </annotationProcessing>

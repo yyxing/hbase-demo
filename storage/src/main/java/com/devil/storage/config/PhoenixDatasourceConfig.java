@@ -3,6 +3,7 @@ package com.devil.storage.config;
 import com.zaxxer.hikari.HikariDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +33,7 @@ public class PhoenixDatasourceConfig {
     // SqlSessionFactoryBean名称
     static final String PHOENIX_SQL_SESSION_FACTORY = "PhoenixSqlSessionFactory";
     //Mapper文件路径
-    static final String MAPPER_LOCATION = "classpath:mapper/*.xml";
+    static final String MAPPER_LOCATION = "classpath*:mapper/*.xml";
     // 数据源Bean名称
     static final String DATASOURCE_NAME = "PhoenixDataSource";
 
@@ -41,7 +42,6 @@ public class PhoenixDatasourceConfig {
 
     @Value("${spring.datasource.driverClassName}")
     private String driverClassName;
-
 
     @Bean(PhoenixDatasourceConfig.DATASOURCE_NAME)
     @Primary
@@ -68,9 +68,9 @@ public class PhoenixDatasourceConfig {
     @Bean
     public SqlSessionFactoryBean sessionFactoryBean(@Qualifier(PhoenixDatasourceConfig.DATASOURCE_NAME) DataSource dataSource) throws IOException {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(dataSource);
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().
                 getResources(PhoenixDatasourceConfig.MAPPER_LOCATION));
-        factoryBean.setDataSource(dataSource);
         return factoryBean;
     }
 }

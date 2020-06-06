@@ -1,1 +1,10 @@
-
+hdfs:
+  pool:
+    size: 20
+    type: default
+  zookeeper:
+    address: 192.168.253.129
+    port: 2181
+logging:
+  level:
+    root: info

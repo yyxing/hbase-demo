@@ -1,1 +1,7 @@
-
+spring:
+  datasource:
+    driverClassName: org.apache.phoenix.jdbc.PhoenixDriver
+    url: jdbc:phoenix:k8s-master:2181
+mybatis:
+  typeAliasesPackage: com.devil.concurrent.entity
+  mapperLocations: classpath*:mapper/*.xml
